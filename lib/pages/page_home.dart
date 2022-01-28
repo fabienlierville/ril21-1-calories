@@ -263,19 +263,41 @@ class _PageHomeState extends State<PageHome> {
         context: context,
         barrierDismissible: false,
         builder: (BuildContext contextDialog){
-          return AlertDialog(
-            title: Text("Erreur", textScaleFactor: 2,),
-            content: Text("Tous les champs de sont pas remplis"),
-            contentPadding: EdgeInsets.all(5.0),
-            actions: [
-              TextButton(
-                  onPressed: (){
-                    Navigator.pop(contextDialog);
-                  },
-                  child: Text("Ok", style: TextStyle(color: Colors.red),)
-              ),
-            ],
-          );
+          if(Platform.isAndroid){
+            return CupertinoAlertDialog(
+              title: Text("Erreur", textScaleFactor: 2,),
+              content: Text("Tous les champs de sont pas remplis"),
+              actions: [
+                CupertinoDialogAction(
+                    onPressed: (){
+                      Navigator.pop(contextDialog);
+                    },
+                    child: Text("Annuler", style: TextStyle(color: Colors.red),)
+                ),
+                CupertinoDialogAction(
+                    onPressed: (){
+                      Navigator.pop(contextDialog);
+                    },
+                    child: Text("Ok", style: TextStyle(color: Colors.blue),)
+                ),
+              ],
+            );
+          }else{
+            return AlertDialog(
+              title: Text("Erreur", textScaleFactor: 2,),
+              content: Text("Tous les champs de sont pas remplis"),
+              contentPadding: EdgeInsets.all(5.0),
+              actions: [
+                TextButton(
+                    onPressed: (){
+                      Navigator.pop(contextDialog);
+                    },
+                    child: Text("Ok", style: TextStyle(color: Colors.red),)
+                ),
+              ],
+            );
+          }
+
         }
     );
   }

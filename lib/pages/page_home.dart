@@ -183,20 +183,44 @@ class _PageHomeState extends State<PageHome> {
   }
 
   Future<void> selectionDate() async{
-    DateTime? datechoisie = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(1900),
-      lastDate: DateTime.now(),
-    );
+    if(Platform.isAndroid){
+      showModalBottomSheet(
+          context: context,
+          builder: (context){
+            return CupertinoDatePicker(
+                onDateTimeChanged: (DateTime dt){
+                  Duration difference = DateTime.now().difference(dt);
+                  int jours = difference.inDays;
+                  double ans = (jours / 365);
+                  setState(() {
+                    age = ans.toInt();
+                  });
+                },
+              minimumYear: 1900,
+              maximumYear: DateTime.now().year,
+              initialDateTime: DateTime.now(),
+              mode: CupertinoDatePickerMode.date,
+            );
+          }
+      );
+    }else{
+      DateTime? datechoisie = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(1900),
+        lastDate: DateTime.now(),
+      );
 
-    if(datechoisie != null){
-      Duration difference = DateTime.now().difference(datechoisie);
-      int jours = difference.inDays;
-      double ans = (jours / 365);
-      setState(() {
-        age = ans.toInt();
-      });
+      if(datechoisie != null){
+        Duration difference = DateTime.now().difference(datechoisie);
+        int jours = difference.inDays;
+        double ans = (jours / 365);
+        setState(() {
+          age = ans.toInt();
+        });
+    }
+
+
 
     }
   }

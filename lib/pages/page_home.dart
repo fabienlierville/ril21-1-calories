@@ -43,9 +43,6 @@ class _PageHomeState extends State<PageHome> {
     );
   }
 
-
-
-
   Widget bodynamic(){
     return Center(
       child: Column(
@@ -63,16 +60,7 @@ class _PageHomeState extends State<PageHome> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     TextAvecStyle("Femme", color: Colors.pink),
-                    Switch(
-                        inactiveTrackColor: Colors.pink,
-                        activeColor: Colors.blue,
-                        value: genre,
-                        onChanged: (bool b){
-                          setState(() {
-                            genre = b;
-                          });
-                        }
-                    ),
+                    switchSelonPlateforme(),
                     TextAvecStyle("Homme", color: Colors.blue),
                   ],
                 ),
@@ -178,15 +166,27 @@ class _PageHomeState extends State<PageHome> {
     );
   }
 
-  Text TextAvecStyle(String data, {color: Colors.black, fontSize: 15.0}){
-    return Text(
-      data,
-      textAlign: TextAlign.center,
-      style: TextStyle(
-          color: color,
-          fontSize: fontSize
-      ),
-    );
+  Widget TextAvecStyle(String data, {color: Colors.black, fontSize: 15.0}){
+    if(Platform.isAndroid){
+      return DefaultTextStyle(
+          style: TextStyle(
+              color: color,
+              fontSize: fontSize
+          ),
+          child: Text(data, textAlign: TextAlign.center,)
+      );
+    }else{
+      return Text(
+        data,
+        textAlign: TextAlign.center,
+        style: TextStyle(
+            color: color,
+            fontSize: fontSize
+        ),
+      );
+    }
+
+
   }
 
   Color getColor(){
@@ -295,4 +295,33 @@ class _PageHomeState extends State<PageHome> {
         }
     );
   }
+
+  Widget switchSelonPlateforme() {
+    if(Platform.isAndroid){
+      return CupertinoSwitch(
+          trackColor: Colors.pink,
+          activeColor: Colors.blue,
+          value: genre,
+          onChanged: (bool b){
+            setState(() {
+              genre = b;
+            });
+          }
+      );
+    }else{
+      return Switch(
+          inactiveTrackColor: Colors.pink,
+          activeColor: Colors.blue,
+          value: genre,
+          onChanged: (bool b){
+            setState(() {
+              genre = b;
+            });
+          }
+      );
+    }
+  }
+
+
+
 }

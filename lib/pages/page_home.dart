@@ -12,6 +12,7 @@ class _PageHomeState extends State<PageHome> {
   int? age;
   int taille = 100;
   int? poids;
+  int? activiteSportive;
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +88,56 @@ class _PageHomeState extends State<PageHome> {
                       ),
                     ),
                     TextAvecStyle("Quelle est votre activité sportive ?", color: getColor()),
-
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Column(
+                          children: [
+                            Radio(
+                                value: 0,
+                                activeColor: getColor(),
+                                groupValue: activiteSportive,
+                                onChanged: (int? value){
+                                  setState(() {
+                                    activiteSportive = value;
+                                  });
+                                }
+                            ),
+                            TextAvecStyle("Faible"),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            Radio(
+                                value: 1,
+                                activeColor: getColor(),
+                                groupValue: activiteSportive,
+                                onChanged: (int? value){
+                                  setState(() {
+                                    activiteSportive = value;
+                                  });
+                                }
+                            ),
+                            TextAvecStyle("Moyen"),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            Radio(
+                                value: 2,
+                                activeColor: getColor(),
+                                groupValue: activiteSportive,
+                                onChanged: (int? value){
+                                  setState(() {
+                                    activiteSportive = value;
+                                  });
+                                }
+                            ),
+                            TextAvecStyle("Fort"),
+                          ],
+                        ),
+                      ],
+                    )
 
                   ],
                 ),

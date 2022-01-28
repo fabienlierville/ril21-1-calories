@@ -1,3 +1,5 @@
+import 'package:universal_io/io.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class PageHome extends StatefulWidget {
@@ -22,145 +24,159 @@ class _PageHomeState extends State<PageHome> {
       onTap: (){
         FocusScope.of(context).requestFocus(FocusNode());
       },
-      child: Scaffold(
+      child:(Platform.isAndroid)
+          ? CupertinoPageScaffold(
+            child: bodynamic(),
+            navigationBar: CupertinoNavigationBar(
+              backgroundColor: getColor(),
+              middle: Text("Calcul de calories"),
+            ),
+          )
+
+          : Scaffold(
         appBar: AppBar(
           title: Text("Calcul de calories"),
           backgroundColor: getColor(),
         ),
-        body:Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Container(
-                child:  TextAvecStyle("Remplissez tous les champs pour obtenir votre besoin journalier en calories"),
-              ),
-              Card(
-                elevation: 10,
-                child: Column(
-                  children: [
-                    //Switch
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        TextAvecStyle("Femme", color: Colors.pink),
-                        Switch(
-                          inactiveTrackColor: Colors.pink,
-                            activeColor: Colors.blue,
-                            value: genre,
-                            onChanged: (bool b){
-                              setState(() {
-                                genre = b;
-                              });
-                            }
-                        ),
-                        TextAvecStyle("Homme", color: Colors.blue),
-                      ],
-                    ),
-                    //Age
-                    ElevatedButton(
-                        onPressed: (){
-                          selectionDate();
-                        },
-                        child: TextAvecStyle((age==null) ?"Cliquer pour votre age " : "Age = ${age}ans", color: Colors.white),
-                      style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(getColor())
-                      ),
-                    ),
-                    //Taille
-                    TextAvecStyle("Votre taille est de ${taille} cm", color: getColor()),
-                    Slider(
-                      min: 100,
-                      max: 250,
-                      activeColor: getColor(),
-                      value: taille.toDouble(),
-                      onChanged: (double d){
-                        setState(() {
-                          taille = d.toInt();
-                        });
-                      },
-                    ),
-                    // Poids
-                    TextField(
-                      keyboardType: TextInputType.number,
-                      onChanged: (String value){
-                        setState(() {
-                          poids = int.tryParse(value);
-                        });
-                      },
-                      decoration: InputDecoration(
-                        labelText: "Entrez votre poids en Kilos."
-                      ),
-                    ),
-                    TextAvecStyle("Quelle est votre activité sportive ?", color: getColor()),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Column(
-                          children: [
-                            Radio(
-                                value: 0,
-                                activeColor: getColor(),
-                                groupValue: activiteSportive,
-                                onChanged: (int? value){
-                                  setState(() {
-                                    activiteSportive = value;
-                                  });
-                                }
-                            ),
-                            TextAvecStyle("Faible"),
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            Radio(
-                                value: 1,
-                                activeColor: getColor(),
-                                groupValue: activiteSportive,
-                                onChanged: (int? value){
-                                  setState(() {
-                                    activiteSportive = value;
-                                  });
-                                }
-                            ),
-                            TextAvecStyle("Moyen"),
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            Radio(
-                                value: 2,
-                                activeColor: getColor(),
-                                groupValue: activiteSportive,
-                                onChanged: (int? value){
-                                  setState(() {
-                                    activiteSportive = value;
-                                  });
-                                }
-                            ),
-                            TextAvecStyle("Fort"),
-                          ],
-                        ),
-                      ],
-                    )
-
-                  ],
-                ),
-              ),
-              ElevatedButton(
-                  onPressed: calculerNombreDeCalories,
-                  child: TextAvecStyle("Calculer", color: Colors.white),
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(getColor())
-                ),
-              )
-            ],
-          ),
-        ) ,
+        body: bodynamic(),
       ),
     );
   }
 
 
+
+
+  Widget bodynamic(){
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Container(
+            child:  TextAvecStyle("Remplissez tous les champs pour obtenir votre besoin journalier en calories"),
+          ),
+          Card(
+            elevation: 10,
+            child: Column(
+              children: [
+                //Switch
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    TextAvecStyle("Femme", color: Colors.pink),
+                    Switch(
+                        inactiveTrackColor: Colors.pink,
+                        activeColor: Colors.blue,
+                        value: genre,
+                        onChanged: (bool b){
+                          setState(() {
+                            genre = b;
+                          });
+                        }
+                    ),
+                    TextAvecStyle("Homme", color: Colors.blue),
+                  ],
+                ),
+                //Age
+                ElevatedButton(
+                  onPressed: (){
+                    selectionDate();
+                  },
+                  child: TextAvecStyle((age==null) ?"Cliquer pour votre age " : "Age = ${age}ans", color: Colors.white),
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(getColor())
+                  ),
+                ),
+                //Taille
+                TextAvecStyle("Votre taille est de ${taille} cm", color: getColor()),
+                Slider(
+                  min: 100,
+                  max: 250,
+                  activeColor: getColor(),
+                  value: taille.toDouble(),
+                  onChanged: (double d){
+                    setState(() {
+                      taille = d.toInt();
+                    });
+                  },
+                ),
+                // Poids
+                TextField(
+                  keyboardType: TextInputType.number,
+                  onChanged: (String value){
+                    setState(() {
+                      poids = int.tryParse(value);
+                    });
+                  },
+                  decoration: InputDecoration(
+                      labelText: "Entrez votre poids en Kilos."
+                  ),
+                ),
+                TextAvecStyle("Quelle est votre activité sportive ?", color: getColor()),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Column(
+                      children: [
+                        Radio(
+                            value: 0,
+                            activeColor: getColor(),
+                            groupValue: activiteSportive,
+                            onChanged: (int? value){
+                              setState(() {
+                                activiteSportive = value;
+                              });
+                            }
+                        ),
+                        TextAvecStyle("Faible"),
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        Radio(
+                            value: 1,
+                            activeColor: getColor(),
+                            groupValue: activiteSportive,
+                            onChanged: (int? value){
+                              setState(() {
+                                activiteSportive = value;
+                              });
+                            }
+                        ),
+                        TextAvecStyle("Moyen"),
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        Radio(
+                            value: 2,
+                            activeColor: getColor(),
+                            groupValue: activiteSportive,
+                            onChanged: (int? value){
+                              setState(() {
+                                activiteSportive = value;
+                              });
+                            }
+                        ),
+                        TextAvecStyle("Fort"),
+                      ],
+                    ),
+                  ],
+                )
+
+              ],
+            ),
+          ),
+          ElevatedButton(
+            onPressed: calculerNombreDeCalories,
+            child: TextAvecStyle("Calculer", color: Colors.white),
+            style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(getColor())
+            ),
+          )
+        ],
+      ),
+    );
+  }
 
   Text TextAvecStyle(String data, {color: Colors.black, fontSize: 15.0}){
     return Text(

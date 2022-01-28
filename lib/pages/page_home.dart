@@ -10,6 +10,8 @@ class PageHome extends StatefulWidget {
 class _PageHomeState extends State<PageHome> {
   bool genre = false;
   int? age;
+  int taille = 100;
+  int? poids;
 
   @override
   Widget build(BuildContext context) {
@@ -59,6 +61,32 @@ class _PageHomeState extends State<PageHome> {
                           backgroundColor: MaterialStateProperty.all<Color>(getColor())
                       ),
                     ),
+                    //Taille
+                    TextAvecStyle("Votre taille est de ${taille} cm"),
+                    Slider(
+                      min: 100,
+                      max: 250,
+                      activeColor: getColor(),
+                      value: taille.toDouble(),
+                      onChanged: (double d){
+                        setState(() {
+                          taille = d.toInt();
+                        });
+                      },
+                    ),
+                    // Poids
+                    TextField(
+                      keyboardType: TextInputType.number,
+                      onChanged: (String value){
+                        setState(() {
+                          poids = int.tryParse(value);
+                        });
+                      },
+                      decoration: InputDecoration(
+                        labelText: "Entrez votre poids en Kilos."
+                      ),
+                    )
+
                   ],
                 ),
               ),

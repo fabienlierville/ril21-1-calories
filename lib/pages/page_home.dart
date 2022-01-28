@@ -65,14 +65,11 @@ class _PageHomeState extends State<PageHome> {
                   ],
                 ),
                 //Age
-                ElevatedButton(
+                buttonSelonPLateforme(
                   onPressed: (){
                     selectionDate();
                   },
-                  child: TextAvecStyle((age==null) ?"Cliquer pour votre age " : "Age = ${age}ans", color: Colors.white),
-                  style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(getColor())
-                  ),
+                  text: (age==null) ?"Cliquer pour votre age " : "Age = ${age}ans",
                 ),
                 //Taille
                 TextAvecStyle("Votre taille est de ${taille} cm", color: getColor()),
@@ -154,12 +151,9 @@ class _PageHomeState extends State<PageHome> {
               ],
             ),
           ),
-          ElevatedButton(
+          buttonSelonPLateforme(
             onPressed: calculerNombreDeCalories,
-            child: TextAvecStyle("Calculer", color: Colors.white),
-            style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(getColor())
-            ),
+            text: "Calculer"
           )
         ],
       ),
@@ -318,6 +312,24 @@ class _PageHomeState extends State<PageHome> {
               genre = b;
             });
           }
+      );
+    }
+  }
+
+  Widget buttonSelonPLateforme({required String text, required VoidCallback onPressed}){
+    if(Platform.isAndroid){
+      return CupertinoButton(
+        onPressed: onPressed,
+        child: TextAvecStyle(text, color: Colors.white),
+        color: getColor(),
+      );
+    }else{
+      return ElevatedButton(
+        onPressed: onPressed,
+        child: TextAvecStyle(text, color: Colors.white),
+        style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all<Color>(getColor())
+        ),
       );
     }
   }

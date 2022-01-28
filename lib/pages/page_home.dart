@@ -9,7 +9,7 @@ class PageHome extends StatefulWidget {
 
 class _PageHomeState extends State<PageHome> {
   bool genre = false;
-
+  int? age;
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +48,17 @@ class _PageHomeState extends State<PageHome> {
                         ),
                         TextAvecStyle("Homme", color: Colors.blue),
                       ],
-                    )
+                    ),
+                    //Age
+                    ElevatedButton(
+                        onPressed: (){
+                          selectionDate();
+                        },
+                        child: TextAvecStyle((age==null) ?"Cliquer pour votre age " : "Age = ${age}ans", color: Colors.white),
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(getColor())
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -86,6 +96,28 @@ class _PageHomeState extends State<PageHome> {
     }else{
       return  Colors.pink;
     }
+  }
+
+  Future<void> selectionDate() async{
+    DateTime? datechoisie = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+    );
+
+    if(datechoisie != null){
+      Duration difference = DateTime.now().difference(datechoisie);
+      int jours = difference.inDays;
+      double ans = (jours / 365);
+      setState(() {
+        age = ans.toInt();
+      });
+
+    }
+
+
+
   }
 
 }

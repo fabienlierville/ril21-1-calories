@@ -62,7 +62,7 @@ class _PageHomeState extends State<PageHome> {
                       ),
                     ),
                     //Taille
-                    TextAvecStyle("Votre taille est de ${taille} cm"),
+                    TextAvecStyle("Votre taille est de ${taille} cm", color: getColor()),
                     Slider(
                       min: 100,
                       max: 250,
@@ -85,7 +85,9 @@ class _PageHomeState extends State<PageHome> {
                       decoration: InputDecoration(
                         labelText: "Entrez votre poids en Kilos."
                       ),
-                    )
+                    ),
+                    TextAvecStyle("Quelle est votre activité sportive ?", color: getColor()),
+
 
                   ],
                 ),
